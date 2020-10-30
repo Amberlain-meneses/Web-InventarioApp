@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InventarioDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="codbarra" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suc_producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id_producto" Type="int" Nullable="false" />
+          <Property Name="id_sucursal" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sucursales">
+          <Key>
+            <PropertyRef Name="id_sucursal" />
+          </Key>
+          <Property Name="id_sucursal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Suc_produ__id_pr__4316F928">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Suc_producto" Type="Self.Suc_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="Suc_producto">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Suc_produ__id_su__440B1D61">
+          <End Role="Sucursales" Type="Self.Sucursales" Multiplicity="1" />
+          <End Role="Suc_producto" Type="Self.Suc_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sucursales">
+              <PropertyRef Name="id_sucursal" />
+            </Principal>
+            <Dependent Role="Suc_producto">
+              <PropertyRef Name="id_sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_agregarPorducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="id_producto" Type="int" Mode="In" />
+          <Parameter Name="id_sucursal" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_agregarStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_producto" Type="int" Mode="In" />
+          <Parameter Name="id_sucursal" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_descStock" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_producto" Type="int" Mode="In" />
+          <Parameter Name="id_sucursal" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_viewProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_sucursal" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="InventarioDBModelStoreContainer">
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suc_producto" EntityType="Self.Suc_producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sucursales" EntityType="Self.Sucursales" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Suc_produ__id_pr__4316F928" Association="Self.FK__Suc_produ__id_pr__4316F928">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Suc_producto" EntitySet="Suc_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Suc_produ__id_su__440B1D61" Association="Self.FK__Suc_produ__id_su__440B1D61">
+            <End Role="Sucursales" EntitySet="Sucursales" />
+            <End Role="Suc_producto" EntitySet="Suc_producto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InventarioDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codbarra" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Suc_producto" Relationship="Self.FK__Suc_produ__id_pr__4316F928" FromRole="Productos" ToRole="Suc_producto" />
+        </EntityType>
+        <EntityType Name="Suc_producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id_producto" Type="Int32" Nullable="false" />
+          <Property Name="id_sucursal" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__Suc_produ__id_pr__4316F928" FromRole="Suc_producto" ToRole="Productos" />
+          <NavigationProperty Name="Sucursales" Relationship="Self.FK__Suc_produ__id_su__440B1D61" FromRole="Suc_producto" ToRole="Sucursales" />
+        </EntityType>
+        <EntityType Name="Sucursales">
+          <Key>
+            <PropertyRef Name="id_sucursal" />
+          </Key>
+          <Property Name="id_sucursal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Suc_producto" Relationship="Self.FK__Suc_produ__id_su__440B1D61" FromRole="Sucursales" ToRole="Suc_producto" />
+        </EntityType>
+        <Association Name="FK__Suc_produ__id_pr__4316F928">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Suc_producto" Type="Self.Suc_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="Suc_producto">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Suc_produ__id_su__440B1D61">
+          <End Role="Sucursales" Type="Self.Sucursales" Multiplicity="1" />
+          <End Role="Suc_producto" Type="Self.Suc_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sucursales">
+              <PropertyRef Name="id_sucursal" />
+            </Principal>
+            <Dependent Role="Suc_producto">
+              <PropertyRef Name="id_sucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InventarioDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="Suc_producto" EntityType="Self.Suc_producto" />
+          <EntitySet Name="Sucursales" EntityType="Self.Sucursales" />
+          <AssociationSet Name="FK__Suc_produ__id_pr__4316F928" Association="Self.FK__Suc_produ__id_pr__4316F928">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Suc_producto" EntitySet="Suc_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Suc_produ__id_su__440B1D61" Association="Self.FK__Suc_produ__id_su__440B1D61">
+            <End Role="Sucursales" EntitySet="Sucursales" />
+            <End Role="Suc_producto" EntitySet="Suc_producto" />
+          </AssociationSet>
+          <FunctionImport Name="SP_agregarPorducto">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id_producto" Mode="In" Type="Int32" />
+            <Parameter Name="id_sucursal" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_agregarStock">
+            <Parameter Name="id_producto" Mode="In" Type="Int32" />
+            <Parameter Name="id_sucursal" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_descStock">
+            <Parameter Name="id_producto" Mode="In" Type="Int32" />
+            <Parameter Name="id_sucursal" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_viewProducts" ReturnType="Collection(InventarioDBModel.SP_viewProducts_Result)">
+            <Parameter Name="id_sucursal" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_viewProducts_Result">
+          <Property Type="Int32" Name="id_producto" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="codbarra" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="precio" Nullable="false" Precision="5" Scale="2" />
+          <Property Type="Int32" Name="cantidad" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InventarioDBModelStoreContainer" CdmEntityContainer="InventarioDBEntities">
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="InventarioDBModel.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codbarra" ColumnName="codbarra" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suc_producto">
+            <EntityTypeMapping TypeName="InventarioDBModel.Suc_producto">
+              <MappingFragment StoreEntitySet="Suc_producto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sucursales">
+            <EntityTypeMapping TypeName="InventarioDBModel.Sucursales">
+              <MappingFragment StoreEntitySet="Sucursales">
+                <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_agregarPorducto" FunctionName="InventarioDBModel.Store.SP_agregarPorducto" />
+          <FunctionImportMapping FunctionImportName="SP_agregarStock" FunctionName="InventarioDBModel.Store.SP_agregarStock" />
+          <FunctionImportMapping FunctionImportName="SP_descStock" FunctionName="InventarioDBModel.Store.SP_descStock" />
+          <FunctionImportMapping FunctionImportName="SP_viewProducts" FunctionName="InventarioDBModel.Store.SP_viewProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InventarioDBModel.SP_viewProducts_Result">
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="codbarra" ColumnName="codbarra" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

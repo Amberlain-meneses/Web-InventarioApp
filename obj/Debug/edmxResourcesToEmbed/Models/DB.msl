@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="InventarioDBModelStoreContainer" CdmEntityContainer="InventarioDBEntities">
+    <EntitySetMapping Name="Productos">
+      <EntityTypeMapping TypeName="InventarioDBModel.Productos">
+        <MappingFragment StoreEntitySet="Productos">
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codbarra" ColumnName="codbarra" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suc_producto">
+      <EntityTypeMapping TypeName="InventarioDBModel.Suc_producto">
+        <MappingFragment StoreEntitySet="Suc_producto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sucursales">
+      <EntityTypeMapping TypeName="InventarioDBModel.Sucursales">
+        <MappingFragment StoreEntitySet="Sucursales">
+          <ScalarProperty Name="id_sucursal" ColumnName="id_sucursal" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_agregarPorducto" FunctionName="InventarioDBModel.Store.SP_agregarPorducto" />
+    <FunctionImportMapping FunctionImportName="SP_agregarStock" FunctionName="InventarioDBModel.Store.SP_agregarStock" />
+    <FunctionImportMapping FunctionImportName="SP_descStock" FunctionName="InventarioDBModel.Store.SP_descStock" />
+    <FunctionImportMapping FunctionImportName="SP_viewProducts" FunctionName="InventarioDBModel.Store.SP_viewProducts">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InventarioDBModel.SP_viewProducts_Result">
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="codbarra" ColumnName="codbarra" />
+          <ScalarProperty Name="precio" ColumnName="precio" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

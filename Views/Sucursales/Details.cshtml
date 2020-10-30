@@ -1,0 +1,120 @@
+﻿@model InventarioApp.Models.Sucursales
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <h3>Detalles</h3>
+    <div>
+        <h4>Sucursales</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.nombre)
+            </dd>
+
+        </dl>
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Código de barras</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in ViewBag.mproduct)
+                {
+                    <tr>
+                        
+                        <td>@product.nombre</td>
+                        <td>@product.codbarra</td>
+                        <td>@product.precio</td>
+                        <td>@product.cantidad</td>
+                        <td>
+                            <button type="button" onclick="setId(@product.id_producto,@Model.id_sucursal)" class="btn btn-success" data-toggle="modal" data-target="#modalAdd">
+                                Registrar
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" onclick="setData(@product.id_producto,@Model.id_sucursal)" class="btn btn-danger" data-toggle="modal" data-target="#modalDiscount">
+                                Realizar Venta
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id_sucursal }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+    <div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Actualizar stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Sucursales/AgregarStock" method="post">
+                        <input type="hidden" id="id_producto" name="id_producto" />
+                        <input type="hidden" id="id_sucursal" name="id_sucursal" />
+                        <input type="number" class="form-control" name="cantidad" placeholder="Cantidad" required autofocus>
+                        <br />
+                        <button class="btn btn-primary" type="submit">
+                            Agregar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Creamos nuestro modal para realizar venta -->>
+    <div class="modal fade" id="modalDisc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Producto Venta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Sucursales/DescStock" method="post">
+                        <input type="hidden" id="id_product" name="id_product" />
+                        <input type="hidden" id="id_sucursal" name="id_sucursal" />
+                        <input type="number" class="form-control" name="cantidad" placeholder="Cantidad" required autofocus>
+                        <br />
+                        <button class="btn btn-primary" type="submit">
+                            Realizar Venta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function setId(id_producto, id_sucursal) {
+           
+            $("#id_producto").val(id_producto);
+            $("#id_sucursal").val(id_sucursal);
+        }
+
+        function setData(id_product, id_sucursal) {
+            
+            $("#id_product").val(id_producto);
+            $("#id_sucursal").val(id_sucursal);
+        }
+    </script>
